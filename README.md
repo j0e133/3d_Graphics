@@ -1,1 +1,1 @@
-# 3d_Graphics
+# This is my 2021 4H project. I created a 3D graphics program using Python. You can use the arrow keys or wasd to move foward, backward, left and right and space/shift to move up and down. To run this, it requires Pygame to be installed for python
