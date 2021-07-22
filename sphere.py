@@ -57,10 +57,11 @@ def end():
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
 # settings
 FOV = 90
-FPS = 60
+FPS = 75
 SPEED = 0.05
 RESOLUTIONSCALE = 16 / 9
 RESOLUTIONP = 720
@@ -119,8 +120,19 @@ clock = pygame.time.Clock()
 dt = clock.tick()
 
 # center mouse 
-pygame.mouse.set_visible(False)
 pygame.mouse.set_pos(*CENTER.tup)
+pygame.mouse.set_visible(False)
+
+draw()
+
+i = 0
+while i < 2:
+    if pygame.mouse.get_rel() != (0, 0):
+        i += 1
+        pygame.mouse.set_pos(*CENTER.tup)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            end()
 
 
 # gameloop
@@ -136,9 +148,8 @@ while True:
 
     # rotate the camera
     x, y = pygame.mouse.get_pos()
-    camera.rotate(vector3((y - CENTER.y) * 0.15, (x - CENTER.x) * 0.15, 0), dt, 1)
-
     pygame.mouse.set_pos(*CENTER.tup)
+    camera.rotate(vector3((y - CENTER.y) * 0.15, (x - CENTER.x) * 0.15, 0), dt, 1)
 
     # move the camera
     foward = vector3(sin(camera.rotation.y), 0, cos(camera.rotation.y))

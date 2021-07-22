@@ -12,7 +12,7 @@ pygame.init()
 # function for drawing all of the faces
 def draw():
     # clear the screen
-    screen.fill(WHITE)
+    screen.fill(BLACK)
 
     # project the vertices to the screen
     for vertex in vertices:
@@ -29,8 +29,8 @@ def draw():
         pygame.draw.circle(screen, (255, 255, 0), camera.projection(lightPos).tup, min(30, max(1, 500 / vector3.distSquared(camera.pos, lightPos) ** 0.5)))
 
     # draw the crosshair
-    # pygame.draw.line(screen, (200, 200, 200), (CENTER.x, CENTER.y - 5), (CENTER.x, CENTER.y + 5), 3)
-    # pygame.draw.line(screen, (200, 200, 200), (CENTER.x - 5, CENTER.y), (CENTER.x + 5, CENTER.y), 3)
+    pygame.draw.line(screen, (200, 200, 200), (CENTER.x, CENTER.y - 5), (CENTER.x, CENTER.y + 5), 3)
+    pygame.draw.line(screen, (200, 200, 200), (CENTER.x - 5, CENTER.y), (CENTER.x + 5, CENTER.y), 3)
 
     # update screen
     pygame.display.flip()
@@ -60,7 +60,7 @@ BLACK = (0, 0, 0)
 
 # settings
 FOV = 90
-FPS = 60
+FPS = 75
 SPEED = 0.05
 RESOLUTIONSCALE = 16 / 9
 RESOLUTIONP = 720
@@ -123,8 +123,19 @@ clock = pygame.time.Clock()
 dt = clock.tick()
 
 # center mouse 
-pygame.mouse.set_visible(False)
 pygame.mouse.set_pos(*CENTER.tup)
+pygame.mouse.set_visible(False)
+
+draw()
+
+i = 0
+while i < 2:
+    if pygame.mouse.get_rel() != (0, 0):
+        i += 1
+        pygame.mouse.set_pos(*CENTER.tup)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            end()
 
 
 # gameloop
